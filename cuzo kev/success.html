@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Loan Approved</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:#f2f2f2;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+
+/* ===== MAIN CARD ===== */
+.wrapper{
+  width:92%;
+  max-width:420px;
+  background:#fff;
+  border-radius:28px;
+  padding:30px 24px;
+  box-shadow:0 20px 50px rgba(0,0,0,.15);
+  animation:slideUp .8s ease;
+}
+
+/* ===== CHECK ICON ===== */
+.check-circle{
+  width:90px;
+  height:90px;
+  margin:0 auto 15px;
+  border-radius:50%;
+  background:#4CAF50;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  animation:pop .5s ease;
+}
+
+.check-circle svg{width:45px;height:45px}
+
+.check{
+  fill:none;
+  stroke:#fff;
+  stroke-width:6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-dasharray:48;
+  stroke-dashoffset:48;
+  animation:draw .6s ease forwards .4s;
+}
+
+/* ===== TEXT ===== */
+h2{text-align:center;margin-bottom:6px}
+.desc{text-align:center;color:#666;font-size:14px;margin-bottom:25px}
+
+/* ===== AMOUNT ===== */
+.amount-box{
+  background:linear-gradient(135deg,#eef2ff,#e0e7ff);
+  border-radius:20px;
+  padding:20px;
+  text-align:center;
+  margin-bottom:22px;
+}
+
+.amount-box span{font-size:12px;letter-spacing:1px;color:#666}
+.amount{font-size:36px;font-weight:600;color:#5b5bd6;margin-top:5px}
+
+/* ===== NOTICE ===== */
+.notice{
+  border:2px solid #f5b041;
+  background:#fff7e6;
+  border-radius:18px;
+  padding:18px;
+  font-size:14px;
+  color:#b9770e;
+  margin-bottom:22px;
+}
+.notice strong{display:block;margin-bottom:8px;color:#e67e22}
+
+/* ===== ACTION BUTTONS ===== */
+.actions{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  animation:fadeIn .6s ease .4s both;
+}
+
+.actions button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:16px;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.deposit{background:#4CAF50;color:#fff}
+.withdraw{background:#5b5bd6;color:#fff}
+.home{background:#f2f2f2;color:#333}
+
+.actions button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 18px rgba(0,0,0,.12);
+}
+
+/* ===== POPUP ===== */
+.popup-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  opacity:0;
+  pointer-events:none;
+  transition:.3s;
+}
+
+.popup{
+  background:#fff;
+  width:90%;
+  max-width:340px;
+  border-radius:20px;
+  padding:22px;
+  text-align:center;
+  transform:scale(.8);
+  transition:.3s;
+}
+
+.popup h3{color:#e74c3c;margin-bottom:10px}
+.popup p{font-size:14px;color:#555;margin-bottom:18px}
+
+.popup button{
+  background:#e74c3c;
+  color:#fff;
+  border:none;
+  padding:12px 18px;
+  border-radius:14px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* ===== ACTIVE POPUP ===== */
+.popup-overlay.active{
+  opacity:1;
+  pointer-events:auto;
+}
+.popup-overlay.active .popup{
+  transform:scale(1);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+  <div class="check-circle">
+    <svg viewBox="0 0 52 52">
+      <path class="check" d="M14 27 L23 36 L38 18"/>
+    </svg>
+  </div>
+
+  <h2>🎉 Congratulations!</h2>
+  <div class="desc">
+    Your loan has been <strong>approved</strong>.<br>
+    Funds will be disbursed shortly.
+  </div>
+
+  <div class="amount-box">
+    <span>APPROVED AMOUNT</span>
+    <div class="amount" id="approvedAmount">$0</div>
+  </div>
+
+  <div class="notice">
+    <strong>⚠ Compliance Notice</strong>
+    Your EcoCash account must be active and maintain a
+    security deposit of at least <strong>10% of your requested loan amount</strong>.
+    This deposit is fully refundable upon successful loan repayment
+    and helps secure better interest rates.
+  </div>
+
+  <div class="actions">
+    <button class="deposit" onclick="location.href='deposit.html'">Deposit Funds</button>
+    <button class="withdraw" onclick="showPopup()">Withdraw Funds</button>
+    <button class="home" onclick="location.href='index.html'">Return Home</button>
+  </div>
+</div>
+
+<!-- 🔔 POPUP -->
+<div class="popup-overlay" id="popup">
+  <div class="popup">
+    <h3>⚠ Action Required</h3>
+    <p>
+      Please deposit first!  
+      You need to deposit <strong>10% of your requested loan amount</strong>
+      before you can withdraw funds.
+    </p>
+    <button onclick="closePopup()">Okay</button>
+  </div>
+</div>
+
+<script>
+/* LOAD AMOUNT */
+let amount = localStorage.getItem("loanAmount") || "600";
+document.getElementById("approvedAmount").textContent = "$" + amount;
+
+/* POPUP CONTROLS */
+function showPopup(){
+  document.getElementById("popup").classList.add("active");
+}
+function closePopup(){
+  document.getElementById("popup").classList.remove("active");
+}
+</script>
+
+</body>
+</html>

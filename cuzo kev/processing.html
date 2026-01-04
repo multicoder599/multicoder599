@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Processing Loan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:'Poppins',sans-serif;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(120deg,#0b5ed7,#00c6ff,#6a11cb);
+  background-size:300% 300%;
+  animation:bgMove 8s ease infinite;
+  overflow:hidden;
+  color:#fff;
+}
+
+/* ===== CARD ===== */
+.card{
+  width:90%;
+  max-width:360px;
+  padding:35px 25px;
+  text-align:center;
+  border-radius:26px;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(18px);
+  box-shadow:0 25px 60px rgba(0,0,0,.3);
+  animation:cardIn .9s cubic-bezier(.22,1,.36,1);
+}
+
+/* ===== CIRCLE ===== */
+.circle-wrap{
+  position:relative;
+  width:160px;
+  height:160px;
+  margin:0 auto 25px;
+}
+
+svg{transform:rotate(-90deg)}
+
+circle{
+  fill:none;
+  stroke-width:10;
+  stroke-linecap:round;
+}
+
+.bg{stroke:rgba(255,255,255,0.25)}
+
+.progress{
+  stroke:#fff;
+  stroke-dasharray:440;
+  stroke-dashoffset:440;
+  animation:progressAnim 6s ease forwards;
+}
+
+/* ===== CENTER ICON ===== */
+.center{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  animation:pulse 1.6s ease infinite;
+}
+
+/* ===== TEXT ===== */
+h2{
+  font-size:22px;
+  margin-bottom:8px;
+}
+
+.status{
+  font-size:14px;
+  opacity:.9;
+  min-height:22px;
+  transition:opacity .3s ease;
+}
+
+/* ===== DOTS ===== */
+.dots::after{
+  content:'';
+  animation:dots 1.5s steps(3,end) infinite;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes progressAnim{to{stroke-dashoffset:0}}
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.15)}
+  100%{transform:scale(1)}
+}
+@keyframes dots{
+  0%{content:''}
+  33%{content:'.'}
+  66%{content:'..'}
+  100%{content:'...'}
+}
+@keyframes bgMove{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes cardIn{
+  from{opacity:0;transform:translateY(40px) scale(.95)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <div class="circle-wrap">
+    <svg width="160" height="160">
+      <circle class="bg" cx="80" cy="80" r="70"></circle>
+      <circle class="progress" cx="80" cy="80" r="70"></circle>
+    </svg>
+    <div class="center">🔍</div>
+  </div>
+
+  <h2>Processing Loan</h2>
+  <div class="status dots" id="status">Checking eligibility</div>
+</div>
+
+<script>
+const steps = [
+  "Checking eligibility",
+  "Verifying account activity",
+  "Analyzing credit score",
+  "Assessing repayment capacity",
+  "Final approval in progress"
+];
+
+const status = document.getElementById("status");
+let index = 0;
+
+const interval = setInterval(() => {
+  index++;
+
+  if(index < steps.length){
+    status.textContent = steps[index];
+  } else {
+    clearInterval(interval);
+
+    // STEP 1: Approved
+    status.classList.remove("dots");
+    status.textContent = "Loan approved ✅";
+
+    // STEP 2: Redirecting
+    setTimeout(() => {
+      status.textContent = "Redirecting to dashboard…";
+    }, 1200);
+
+    // STEP 3: Redirect
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 2800);
+  }
+}, 1200);
+</script>
+
+</body>
+</html>

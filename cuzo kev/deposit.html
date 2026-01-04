@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Deposit Instructions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:#f2f2f2;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* ===== CARD ===== */
+.card{
+  width:92%;
+  max-width:420px;
+  background:#fff;
+  border-radius:26px;
+  padding:28px 22px;
+  box-shadow:0 20px 50px rgba(0,0,0,.15);
+  animation:slideUp .7s ease;
+}
+
+/* ===== AMOUNT ===== */
+.amount{
+  font-size:34px;
+  font-weight:600;
+  color:#5b5bd6;
+  text-align:center;
+  margin-bottom:20px;
+}
+
+/* ===== TITLE ===== */
+h3{
+  margin-bottom:15px;
+}
+
+/* ===== STEPS ===== */
+.steps{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  margin-bottom:20px;
+}
+
+.step{
+  display:flex;
+  gap:12px;
+  font-size:14px;
+  color:#444;
+}
+
+.step span{
+  min-width:26px;
+  height:26px;
+  background:#5b5bd6;
+  color:#fff;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:13px;
+  font-weight:600;
+}
+
+/* ===== TIP ===== */
+.tip{
+  background:#fff7e6;
+  border:2px solid #f5b041;
+  border-radius:18px;
+  padding:16px;
+  font-size:14px;
+  color:#b9770e;
+  margin-bottom:18px;
+  animation:fadeIn .6s ease;
+}
+
+.tip strong{
+  display:block;
+  margin-bottom:6px;
+}
+
+/* ===== CONFIRM ===== */
+.confirm{
+  background:#eaf7ea;
+  border:2px solid #4CAF50;
+  border-radius:18px;
+  padding:14px;
+  font-size:14px;
+  color:#2e7d32;
+  margin-bottom:22px;
+}
+
+/* ===== BUTTON ===== */
+button{
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:20px;
+  background:linear-gradient(135deg,#5b5bd6,#7b7bf0);
+  color:#fff;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  transition:.3s;
+}
+
+button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 25px rgba(91,91,214,.35);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes slideUp{
+  from{transform:translateY(40px);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <div class="amount" id="depositAmount">$0</div>
+
+  <h3>Instructions:</h3>
+
+  <div class="steps">
+    <div class="step"><span>1</span> Open your EcoCash app or dial *151#</strong> on your phone.</div>
+    <div class="step"><span>2</span> Select <strong>“Send Money”</strong> or <strong>“Deposit”</strong>.</div>
+    <div class="step"><span>3</span> Enter your EcoCash account number: </strong>.</div>
+    <div class="step"><span>4</span> Enter the amount shown above (or more).</div>
+    <div class="step"><span>5</span> Confirm the transaction and complete the deposit.</div>
+    <div class="step"><span>6</span> Wait for the confirmation SMS from EcoCash.</div>
+  </div>
+
+  <div class="tip">
+    <strong>💡 Helpful Tip</strong>
+    If you do not have the 10% available, ask a friend to send the cash to your EcoCash account,
+    then you can send it back after qualification.
+  </div>
+
+  <div class="confirm">
+    ✅ Once the deposit is confirmed, you will be able to use your loan funds.
+  </div>
+
+  <button onclick="completeDeposit()">✔ I've Completed the Deposit</button>
+
+</div>
+
+<script>
+/* ===== CALCULATE 10% DEPOSIT ===== */
+const loanAmount = Number(localStorage.getItem("loanAmount")) || 600;
+const deposit = (loanAmount * 0.10).toFixed(2);
+document.getElementById("depositAmount").textContent = "$" + deposit;
+
+/* ===== REDIRECT ===== */
+function completeDeposit(){
+  window.location.href = "success.html";
+}
+</script>
+
+</body>
+</html>

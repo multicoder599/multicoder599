@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>EcoCash Loan Application</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:'Poppins',sans-serif;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(120deg,#0b5ed7,#00c6ff,#6a11cb);
+  background-size:300% 300%;
+  animation:bgMove 8s ease infinite;
+}
+
+/* ===== CARD ===== */
+.card{
+  width:92%;
+  max-width:420px;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(18px);
+  border-radius:26px;
+  padding:30px 25px;
+  box-shadow:0 25px 60px rgba(0,0,0,.3);
+  color:#fff;
+  animation:cardIn .9s cubic-bezier(.22,1,.36,1);
+}
+
+h2{
+  text-align:center;
+  margin-bottom:8px;
+}
+
+.sub{
+  text-align:center;
+  font-size:14px;
+  opacity:.85;
+  margin-bottom:25px;
+}
+
+/* ===== INPUTS ===== */
+.field{
+  margin-bottom:18px;
+}
+
+label{
+  font-size:13px;
+  opacity:.9;
+}
+
+input, select{
+  width:100%;
+  padding:14px;
+  margin-top:6px;
+  border:none;
+  border-radius:14px;
+  outline:none;
+  font-size:14px;
+}
+
+input::placeholder{color:#999}
+
+/* ===== PHONE ===== */
+.phone{
+  display:flex;
+  gap:8px;
+}
+
+.phone span{
+  background:#fff;
+  color:#000;
+  padding:14px;
+  border-radius:14px;
+  font-weight:600;
+}
+
+/* ===== BUTTON ===== */
+button{
+  width:100%;
+  padding:15px;
+  margin-top:10px;
+  border:none;
+  border-radius:18px;
+  background:#fff;
+  color:#0b5ed7;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  transition:.3s;
+}
+
+button.loading{
+  pointer-events:none;
+  opacity:.85;
+}
+
+.loader{
+  width:18px;
+  height:18px;
+  border:3px solid rgba(11,94,215,.3);
+  border-top:3px solid #0b5ed7;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  display:none;
+}
+
+button.loading .loader{
+  display:block;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+@keyframes bgMove{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes cardIn{
+  from{opacity:0;transform:translateY(40px) scale(.95)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>EcoCash Loan</h2>
+  <div class="sub">Apply instantly. No paperwork.</div>
+
+  <form id="loanForm">
+    <div class="field">
+      <label>Phone Number</label>
+      <div class="phone">
+        <span>🇿🇼 +263</span>
+        <input type="text" name="phone" maxlength="10" pattern="\d{10}" inputmode="numeric" placeholder="Enter phone number" required>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Email Address</label>
+      <input type="email" required placeholder="you@email.com">
+    </div>
+
+    <div class="field">
+      <label>Loan Amount (USD)</label>
+      <input type="number" required placeholder="50 - 5000">
+    </div>
+
+    <div class="field">
+      <label>Purpose of Loan</label>
+      <select required>
+        <option value="">Select purpose</option>
+        <option>Personal</option>
+        <option>Business</option>
+        <option>Emergency</option>
+        <option>Education</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Monthly Income (USD)</label>
+      <input type="number" required placeholder="e.g. 300">
+    </div>
+
+    <button type="submit" id="submitBtn">
+      Submit Application
+      <div class="loader"></div>
+    </button>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById("loanForm");
+  const btn = document.getElementById("submitBtn");
+  
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+  
+    btn.classList.add("loading");
+    btn.firstChild.textContent = "Submitting";
+  
+    // 🔐 GET VALUES (NO UI CHANGES)
+    const phone = document.querySelector('input[name="phone"]').value;
+    const email = document.querySelector('input[type="email"]').value;
+    const loanAmount = document.querySelector('input[type="number"]').value;
+  
+    // 💾 SAVE TO LOCAL STORAGE
+    localStorage.setItem("phone", phone);
+    localStorage.setItem("email", email);
+    localStorage.setItem("loanAmount", loanAmount);
+  
+    setTimeout(() => {
+      window.location.href = "processing.html";
+    }, 1800);
+  });
+  
+  // Keep phone input numeric (unchanged behavior)
+  document.querySelector('input[name="phone"]').addEventListener('input', function () {
+    this.value = this.value.replace(/\D/g, '').slice(0, 10);
+  });
+  </script>
+  
+
+</body>
+</html>
