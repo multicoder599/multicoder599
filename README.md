@@ -19,15 +19,8 @@
 - Investment & fintech web platforms  
 - Secure authentication systems  
 - Admin dashboards & APIs  
-
----
-
-## 📊 GitHub Stats
-![Newton's GitHub stats](https://github-readme-stats.vercel.app/api?username=YOUR_USERNAME&show_icons=true&theme=tokyonight)
-
 ---
 
 ## 🤝 Let’s Connect
 - 🌐 Portfolio: coming soon  
-- 💬 Email: your@email.com  
-- 🐦 Twitter: @yourhandle
+- 💬 Email: newtonmulti@gmail.com  
