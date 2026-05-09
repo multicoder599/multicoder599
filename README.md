@@ -9,9 +9,9 @@
 ## 🛠 Tech Stack
 - **Frontend:** HTML, CSS, JavaScript
 - **Backend:** Node.js, Express
-- **Databases:** MongoDB, MySQL
+- **Database:** MongoDB
 - **Tools:** Git, GitHub, Postman
-- **Deployment:** Netlify, Vercel, Render
+- **Deployment:** Surge,Render,Vps
 
 ---
 
